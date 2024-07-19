@@ -7,7 +7,16 @@ names %>%
     slice_max(count, n = 500) %>%
     mutate(
         r = rank(-count, ties.method = "first")
-    ) %>% 
-    pivot_wider(id_cols = !count, names_from = c(gender, year), values_from = name) %>% 
-    arrange(r) %>%
-    view()
+    ) %>%
+    ungroup() %>%
+    split(.$gender) %>%
+    map(\(df) {
+        g <- distinct(df, gender)
+
+        df2 <- pivot_wider(df, id_cols = !count, names_from = year, values_from = name) %>%
+            arrange(r)
+
+        df2[is.na(df2)] <- ""
+
+        write_csv(df2, paste0("export/top500names-", g, ".csv"))
+    })
