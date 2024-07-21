@@ -46,7 +46,7 @@ longest_letter_range_names <- map_df(
     }
 ) %>%
     mutate(
-        letter_count = stringr::str_extract_all(name, max_letter) %>% map(unlist) %>% map_dbl(length)
+        letter_count = stringr::str_extract_all(name, max_letter) %>% map_dbl(length)
     ) %>%
     relocate(max_letter, letter_count, name) %>%
     arrange(desc(letter_count))
