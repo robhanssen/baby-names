@@ -27,7 +27,8 @@ name_filter <- function(dat = names, reg_exp, tag = "name") {
 name_filter_df <-
     tribble(
         ~tag, ~reg,
-        "aiden", ".*(a|e).*(i|y).*(t|d)(e|o|a)(n|nn)$",
+        "aiden", ".*(a|e|o|u).*(i|y|).*(t|d|th)(i|u|e|o|a|y)(n|nn)$",
+        "eyn", "(d|t)(a|e|o|i|u|)yn(n|)$",
         "lees", ".*(ee|eigh|aigh|ey|ehy|egh|agh|aigh|ehg|eigh|ai|aei|aie|ae|iae|li|liy|lay|loy)$",
         "xley", "x(ley|li|lee|liy|lay|loy)$",
         "hley", "h(ley|li|lee|liy|lay|loy)$",
