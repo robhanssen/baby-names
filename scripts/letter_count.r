@@ -13,7 +13,7 @@ names_trans <-
 let_count <- map(
     letters,
     \(x) {
-        stringr::str_extract_all(names_trans$name_t, x) %>% map_int(length)
+        str_count(names_trans$name_t, x)
     }
 )
 
