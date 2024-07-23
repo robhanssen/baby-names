@@ -4,11 +4,10 @@ load("Rdata/names.Rda")
 
 names_trans <-
     names %>%
+    distinct(name) %>%
     mutate(
-        name_t = tolower(name),
-        first = substr(name_t, 1, 1)
-    ) %>%
-    distinct(name_t)
+        name_t = tolower(name)
+    )
 
 let_count <-
     map(
