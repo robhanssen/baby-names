@@ -10,43 +10,33 @@ names_trans <-
     ) %>%
     distinct(name_t)
 
-let_count <- map(
-    letters,
-    \(x) {
-        str_count(names_trans$name_t, x)
-    }
-)
+let_count <-
+    map(
+        letters,
+        \(x) {
+            str_count(names_trans$name_t, x)
+        }
+    ) %>% purrr::set_names(letters)
 
-max_count <- map_int(let_count, max)
-names(max_count) <- letters
 
-max_length <- map(
-    letters,
-    \(x) {
-        stringr::str_extract_all(names_trans$name_t, x) %>% map_int(length) == max_count[x]
-    }
-)
+max_length_name <-
+    map(
+        letters,
+        \(x) names_trans$name_t[which(let_count[[x]] == max(let_count[[x]]))]
+    ) %>% purrr::set_names(letters)
 
-max_length_index <- map(max_length, which)
-
-names_max <- map(
-    max_length_index,
-    \(n) names_trans$name_t[n]
-)
-
-names(names_max) <- letters
-
-longest_letter_range_names <- map_df(
-    letters,
-    \(l) {
-        tibble(
-            max_letter = l,
-            name = unlist(names_max[l]),
-        )
-    }
-) %>%
+longest_letter_range_names <-
+    map_df(
+        letters,
+        \(l) {
+            tibble(
+                max_letter = l,
+                name = unlist(max_length_name[l]),
+            )
+        }
+    ) %>%
     mutate(
-        letter_count = stringr::str_extract_all(name, max_letter) %>% map_dbl(length)
+        letter_count = stringr::str_count(name, max_letter)
     ) %>%
     relocate(max_letter, letter_count, name) %>%
     arrange(desc(letter_count))
