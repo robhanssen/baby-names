@@ -39,6 +39,7 @@ longest_letter_range_names <-
         letter_count = stringr::str_count(name, max_letter)
     ) %>%
     relocate(max_letter, letter_count, name) %>%
-    arrange(desc(letter_count))
+    arrange(desc(letter_count)) %>%
+    mutate(name = str_to_sentence(name))
 
 write_csv(longest_letter_range_names, "export/names_with_max_letters.csv")
