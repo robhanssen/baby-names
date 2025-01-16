@@ -42,7 +42,7 @@ combined %>%
         # values = c("M" = "dodgerblue", "F" = "#EE10BE")
     ) +
     labs(
-        x = NULL, #"Birth year",
+        x = NULL, # "Birth year",
         y = NULL, # "Count",
         fill = "Name",
         caption = "Source: Social Security Administration baby name database",
@@ -61,10 +61,9 @@ combined %>%
     theme(
         plot.title = ggtext::element_textbox_simple(
             margin = margin(b = 20, t = 5),
-            face = "bold", 
+            face = "bold",
             size = 10
-            ),
-        
+        ),
     )
 
 ggsave("export/apples_oranges.png", width = 4.25, height = 4.25)
